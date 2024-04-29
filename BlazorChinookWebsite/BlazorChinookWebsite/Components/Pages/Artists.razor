@@ -1,0 +1,31 @@
+﻿@page "/artists"
+@using ChinookLibrary.Models
+@using Microsoft.AspNetCore.Antiforgery;
+@using ChinookLibrary
+@attribute [RequireAntiforgeryToken]
+
+<h3>Artists:</h3>
+
+<EditForm Model="@this" OnSubmit="@Submit" FormName="TheArtists">
+</EditForm>
+
+@code {
+    bool submitted = false;
+    private void Submit() => submitted = true;
+}
+<p>@{
+       var list2 = DbUtility.ListArtists();
+       if (list2 != null)
+       {
+           <textarea style="width: 750px; min-height: 300px">
+        @foreach (var type in list2)
+        {
+            @type
+            @("\n")
+
+        }
+                        </textarea>
+       }
+
+
+   }</p>

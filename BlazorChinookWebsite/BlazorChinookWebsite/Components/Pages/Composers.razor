@@ -1,0 +1,29 @@
+﻿@page "/composers"
+@using ChinookLibrary.Models
+@using Microsoft.AspNetCore.Antiforgery;
+@using ChinookLibrary
+@attribute [RequireAntiforgeryToken]
+
+<h3>Composers:</h3>
+
+<EditForm Model="@this" OnSubmit="@Submit" FormName="TheComposers">
+</EditForm>
+
+@code {
+    bool submitted = false;
+    private void Submit() => submitted = true;
+}
+<p>@{
+         var list2 = DbUtility.Composers();
+         if (list2 != null)
+         {
+             <textarea style="width: 750px; min-height: 300px">
+        @foreach (var type in list2)
+             { 
+                 @type.Key
+                 @("\n")
+
+             }
+                        </textarea>
+         }
+   }</p>

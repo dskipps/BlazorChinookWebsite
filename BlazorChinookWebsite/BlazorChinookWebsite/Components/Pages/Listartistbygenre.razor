@@ -1,0 +1,38 @@
+﻿@page "/listtrackbygenre"
+@using ChinookLibrary.Models
+@using Microsoft.AspNetCore.Antiforgery;
+@using ChinookLibrary
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@attribute [RequireAntiforgeryToken]
+
+<h3>List Tracks by Genre</h3>
+
+<EditForm Model="@this" OnSubmit="@Submit" FormName="ListTracks">
+    <InputText @bind-Value = "Genre"/>
+    <button type="submit">Submit</button>
+</EditForm>
+@code {
+    bool submitted = false;
+    [SupplyParameterFromForm]
+    public string? Genre { get; set; }
+    private void Submit() => submitted = true;
+}
+
+@if (submitted){
+    <br/>
+    <h3>Here is the List of Tracks by Genre: @Genre</h3>
+    var list = DbUtility.ListTracksByGenre(Genre);
+    if (list != null)
+    {
+        @foreach (var type in list)
+        {
+            var typeformating = type.Split("::");
+            var formated = String.Join(", ", typeformating.Skip(1));
+            @formated
+            <br/>
+
+
+        }
+    }
+
+}

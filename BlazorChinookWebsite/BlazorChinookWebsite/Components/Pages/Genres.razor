@@ -1,0 +1,27 @@
+﻿@page "/genres"
+@using ChinookLibrary.Models
+@using Microsoft.AspNetCore.Antiforgery;
+@using ChinookLibrary
+@attribute [RequireAntiforgeryToken]
+
+<h3>Genres:</h3>
+
+<EditForm Model="@this" OnSubmit="@Submit" FormName="TheGenres">
+</EditForm>
+
+@code {
+    bool submitted = false;
+    private void Submit() => submitted = true;
+}
+<p>@{
+       var list1 = DbUtility.ListGenres();
+       if (list1 != null)
+       {
+           @foreach (var type in list1)
+           {
+               @type
+               @(", ")
+           }
+       }
+
+   }</p>
